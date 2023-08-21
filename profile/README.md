@@ -476,7 +476,7 @@ Among our heroes is **Perikles**, an ingenious service wielding an **AdmissionWe
 
 As you navigate our platform, remember that just as the heroes of ancient Greece embarked on epic journeys, you too are on a journey of discovery and learning. Together, we explore the realms of the Greek language and culture, bridging the past and the present in a symphony of knowledge.
 
-![Services](drawio/odysseia.drawio.png)
+![Services](profile/drawio/odysseia.drawio.png)
 
 ## Solon Flow: Ensuring Configurations and Access
 
@@ -515,7 +515,7 @@ This orchestration achieves a controlled equilibrium. Solon, the master conducto
 
 Through the Solon Flow, our platform attains a harmonious symphony of configurations and access. Just as the ancient Greeks revered the delicate balance of wisdom and governance, we uphold this principle in our modern technology, fostering a landscape of reliability and security.
 
-![Solon](drawio/solon-flow.drawio.png)
+![Solon](profile/drawio/solon-flow.drawio.png)
 
 ## The Tracing Flow: Unveiling Insights through the Symphony of Data
 
@@ -535,4 +535,4 @@ In the grand theater of Kubernetes, **Sophokles** takes the stage, meticulously 
 
 As we traverse the Tracing Flow, we uncover a symphony of data—an interplay of actions, traces, and metrics. Just as the poets of ancient Greece unveiled the essence of human experience through words, we, too, unveil the essence of our platform through the artistry of technology. In this flow, data dances, and insights bloom, enriching our Odyssey of knowledge and understanding.
 
-![Tracing](drawio/euripides.png)
+![Tracing](profile/drawio/euripides.png)
