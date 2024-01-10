@@ -20,6 +20,8 @@ Thank you for joining us on this voyage of discovery and learning. Your engageme
   - [Odyssey of Services: Navigating the Odyssey Greek Learning Platform](#odyssey-of-services-navigating-the-odyssey-greek-learning-platform)
   - [Solon Flow: Ensuring Configurations and Access](#solon-flow-ensuring-configurations-and-access)
   - [The Tracing Flow: Unveiling Insights through the Symphony of Data](#the-tracing-flow-unveiling-insights-through-the-symphony-of-data)
+  - [Development Flow](#development-flow)
+  - [Homecluster Setup](#homecluster-setup)
 - [Attike](#attike)
   - [Aristophanes - Ἀριστοφάνης](#aristophanes---ἀριστοφάνης)
   - [Euripides - Εὐριπίδης](#euripides---εὐριπίδης)
@@ -167,21 +169,23 @@ Each API is accompanied by its vigilant companion, **Aristophanes**—the sideca
 
 ### The Metrics Symphony with Sophokles
 
+WIP: sophokles is not build yet.
+
 In the grand theater of Kubernetes, **Sophokles** takes the stage, meticulously collecting the symphony of metrics that tell the tale of every pod's existence. With artistry akin to the ancient playwrights, Sophokles fetches the metrics of memory and CPU usage, translating them into tangible insights. These insights illuminate the journey of each trace, enriching the narrative with the technical heartbeat of the platform.
 
 As we traverse the Tracing Flow, we uncover a symphony of data—an interplay of actions, traces, and metrics. Just as the poets of ancient Greece unveiled the essence of human experience through words, we, too, unveil the essence of our platform through the artistry of technology. In this flow, data dances, and insights bloom, enriching our Odyssey of knowledge and understanding.
 
 ![Tracing](/profile/drawio/euripides.png)
 
-### Development flow
+## Development flow
 
-In order to develop locally a development flow has been setup.
+In order to develop locally a development flow has been setup. WIP
 
 ![Development](/profile/drawio/development-flow.drawio.png)
 
-### Homecluster setup
+## Homecluster Setup
 
-Odysseia-greek runs on a k3s platform powered by raspberry pi's.
+Odysseia-greek runs on a k3s platform powered by raspberry pi's. WIP
 
 ![Homecluster](/profile/drawio/homecluster.drawio.png)
 
