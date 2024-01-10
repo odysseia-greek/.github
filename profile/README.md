@@ -1,5 +1,7 @@
 # Odysseia <!-- omit in toc -->
 
+<img alt="Mascot" height="400" src="images/mascot.png" width="400"/>
+
 Welcome to Odysseia (Ὀδύσσεια): Embark on a Greek Language Odyssey
 
 Just as the epic poem "Odysseia" by Homeros narrates the adventurous journey of Odysseus and his crew, the endeavor to learn Greek can feel like an odyssey in itself. Odysseia is a personal passion project that harmonizes a tapestry of my interests—ranging from the captivating world of ancient Greek history to the exhilarating challenge of devising innovative technical solutions.
@@ -27,41 +29,161 @@ Thank you for joining us on this voyage of discovery and learning. Your engageme
   - [Perikles - Περικλῆς](#perikles---περικλῆς)
   - [Ptolemaios - Πτολεμαῖος](#ptolemaios---πτολεμαῖος)
   - [Solon - Σόλων](#solon---σόλων)
-- [Olympos](#olympos)
+  - [Drakon - Δράκων](#drakon---δράκων)
+  - [Kleisthenes - Κλεισθένης](#kleisthenes---κλεισθένης)
+  - [Peisistratos - Πεισίστρατος](#peisistratos---πεισίστρατος)
+  - [Periandros - Περίανδρος](#periandros---περίανδρος)
+- [Olympia](#olympia)
   - [Alexandros - Αλέξανδρος](#alexandros---αλέξανδρος)
   - [Dionysios - Διονύσιος ὁ Θρᾷξ](#dionysios---διονύσιος-ὁ-θρᾷξ)
   - [Homeros - Ὅμηρος](#homeros---Ὅμηρος)
   - [Herodotos - Ἡρόδοτος](#herodotos---ἡρόδοτος)
   - [Ploutarchos - Πλούταρχος](#ploutarchos---πλούταρχος)
   - [Sokrates - Σωκράτης](#sokrates---σωκράτης)
-- [Ionia](#dataseeders)
   - [Anaximander - Ἀναξίμανδρος](#anaximander---ἀναξίμανδρος)
   - [Anaximenes - Ἀναξιμένηςς](#anaximenes---ἀναξιμένης)
   - [Demokritos - Δημόκριτος](#demokritos---δημόκριτος)
   - [Herakleitos - Ἡράκλειτος](#herakleitos---ἡράκλειτος)
   - [Parmenides - Παρμενίδης](#parmenides---παρμενίδης)
   - [Melissos - Μέλισσος](#melissos---μέλισσος)
+  - [Hippokrates - Ἱπποκράτης](#hippokrates---ἱπποκράτης)
 - [Frontend](#frontend)
   - [Pheidias - Φειδίας](#pheidias---φειδίας)
-- [Knossos](#init)
-  - [Drakon - Δράκων](#drakon---δράκων)
-  - [Periandros - Περίανδρος](#periandros---περίανδρος)
-  - [Thrasyboulos - Θρασύβουλος](#thrasyboulos---Θρασύβουλος)
-- [Ops](#ops)
+- [Mykenai](#mykenai)
   - [Archimedes - Ἀρχιμήδης](#archimedes---ἀρχιμήδης)
+  - [Dareios - Δαρεῖος](#dareios---δαρεῖος)
   - [Lykourgos - Λυκοῦργος](#lykourgos---λυκοῦργος)
   - [Themistokles - Θεμιστοκλῆς](#themistokles---θεμιστοκλῆς)
-- [Tests](#tests)
-  - [Hippokrates - Ἱπποκράτης](#hippokrates---ἱπποκράτης)
   - [Xerxes - Ξέρξης](#xerxes---ξέρξης)
-- [Interfaces](#interfaces)
+- [Agora](#agora)
+  - [Archytas - Ἀρχύτας](#archytas---Ἀρχύτας)
   - [Aristoteles - Ἀριστοτέλης](#aristoteles---Ἀριστοτέλης)
-  - [Diogenes - Diogenes](#Diogenes---Diogenes)
+  - [Diogenes - Διογένης](#diogenes---Διογένης)
   - [Eupalinos - Εὐπαλῖνος](#Eupalinos---Εὐπαλῖνος)
   - [Plato - Πλάτων](#plato---πλάτων)
   - [Thales - Θαλῆς](#Thales---Θαλῆς)
 - [Common](#common)
   - [Eratosthenes - Ἐρατοσθένης](#eratosthenes---ἐρατοσθένης)
+
+# Technical docs
+
+There are currently a few flows that are worth expanding upon:
+
+## Odyssey of Services: Navigating the Odyssey Greek Learning Platform
+
+Welcome to the Odyssey Greek Learning Platform, where ancient wisdom meets modern technology. As you embark on your journey to explore the depths of the Greek language, let us guide you through the way our services weave together to create a seamless and enriching experience.
+
+### The Starting Point
+
+When you access [https://odysseia-greek.com](https://odysseia-greek.com), you step onto the homepage of our application, crafted with Vue.js. From here, you can embark on your learning quest through various major modules, each named after a prominent figure in Greek history.
+
+- **Quiz (Sokrates)**: Engage in interactive quizzes that challenge your knowledge and understanding.
+- **Text (Herodotos)**: Immerse yourself in the writings of Herodotus, exploring the ancient texts.
+- **Grammar (Dionysios)**: Delve into the intricate web of Greek grammar with Dionysios.
+- **Dictionary (Alexandros)**: Access a treasure trove of Greek words and meanings, with more in the works.
+
+### Seamless Navigation
+
+As you make calls and interact with the platform, our architecture works harmoniously to provide a seamless experience. The frontend, aptly named **Pheidias**, takes your requests and forwards them to a powerful backend GraphQL proxy. This proxy connects with the necessary APIs to retrieve the information you seek. Our backend APIs are meticulously crafted using Golang, ensuring efficiency and reliability.
+
+### The Vault of Configurations
+
+Central to our ecosystem is **Vault**, the guardian of configurations. Every API, including our major modules and backend services, sources its configuration securely from Vault. This ensures that each component is equipped with the precise information it requires to function optimally.
+
+### Empowering Elastic Search
+
+Elastic Search stands as the cornerstone of our system, storing the essence of our content. The database is dynamically enriched by dedicated **Dataseeders** working tirelessly behind the scenes. Each Dataseeder exclusively populates its designated index, ensuring data integrity and organization.
+
+### Unveiling the Unconventional
+
+Among our Dataseeders, **Parmenides** stands out with its unique approach. This visionary Seeder places messages on a queue named **Eupalinos**. These messages are then orchestrated and processed by **Melissos**, contributing to the expansion of our dictionary.
+
+### Initiating the Journey
+
+To ensure a seamless start for every traveler on our platform, **Periandros** and **Drakon** work as Init Containers. They lay the foundation by creating necessary roles and provisioning user accounts for each pod.
+
+### Guiding the Odyssey
+
+At the helm of our platform is **Themistokles**, orchestrating and managing the Kubernetes environment. When it's time for deployment, **Archimedes**, our versatile command-line tool, steps in. Archimedes orchestrates everything from high availability setups to TLS configurations, vault management, and elastic deployments.
+
+### Enabling TLS with Perikles
+
+Among our heroes is **Perikles**, an ingenious service wielding an **AdmissionWebHook**. Much like the Athenian statesman, Perikles examines each service and determines if TLS is required. It then adroitly creates and updates certificates, fortifying our system's security with the same wisdom that fortified the walls of Athens.
+
+As you navigate our platform, remember that just as the heroes of ancient Greece embarked on epic journeys, you too are on a journey of discovery and learning. Together, we explore the realms of the Greek language and culture, bridging the past and the present in a symphony of knowledge.
+
+![Services](drawio/odysseia.drawio.png)
+
+## Solon Flow: Ensuring Configurations and Access
+
+Within the Odyssey Greek Learning Platform, the Solon Flow serves as a vital guardian, orchestrating the intricate dance of configurations and access across our services. This process is divided into several flows:
+
+### Flows in Harmony
+
+1. **API Flow**: Dedicated to APIs, this flow governs the interaction between services and the Elasticsearch database. APIs are empowered to fetch and manipulate data, but they are carefully restricted from deleting documents or indexes. Each API operates within its own designated index, ensuring separation and security.
+
+2. **Seeder Flow**: Seeders, the diligent workers of our ecosystem, play a pivotal role in enriching our Elasticsearch database. However, they operate under strict limitations—they can populate documents, but they are barred from reading any data.
+
+3. **Hybrid Flow**: This distinctive flow is exclusively tailored for Melissos, the visionary Seeder. Melissos bridges the gap between adding and updating documents in Elasticsearch. Due to its unique responsibilities, Melissos operates solely within this hybrid flow.
+
+### Controlled Initiatives by Periandros
+
+The initiation of this configuration symphony is orchestrated by **Periandros**, our Init Container. It interfaces directly with Solon to request the creation of essential configurations. This dance of creation involves establishing users in Elasticsearch and safeguarding their credentials within Vault. Notably, each pod's username is its identity, ensuring that every pod enjoys its unique access.
+
+### Ptolemaios: The Gatekeeper
+
+As a pod springs to life, it reaches out to its guardian **Ptolemaios**, the sidecar. Ptolemaios, in turn, communicates with Solon to secure a one-time token for accessing Vault—a token rendered useless after use. Solon's vigilance shines as it inspects Kubernetes annotations, evaluating the pod's role and the specified access level. Through annotations like:
+
+```yaml
+spec:
+  template:
+    metadata:
+      annotations:
+        odysseia-greek/role: api
+        odysseia-greek/access: dictionary
+```
+
+Access roles are established, delineating the permissible actions for the pod. Once the evaluation proves successful, a token is issued, paving the way for Ptolemaios to request the configuration data from Vault.
+
+#### The Elegance of Control
+
+This orchestration achieves a controlled equilibrium. Solon, the master conductor, remains devoid of direct access to configurations. While it possesses the power to create and delete, the privilege of reading these configurations remains beyond its grasp. Ptolemaios, the vigilant gatekeeper, guards the path to Vault with unwavering scrutiny, ensuring secure and controlled access for each pod.
+
+Through the Solon Flow, our platform attains a harmonious symphony of configurations and access. Just as the ancient Greeks revered the delicate balance of wisdom and governance, we uphold this principle in our modern technology, fostering a landscape of reliability and security.
+
+![Solon](drawio/solon-flow.drawio.png)
+
+## The Tracing Flow: Unveiling Insights through the Symphony of Data
+
+Within the Odyssey Greek Learning Platform, the Tracing Flow unveils the secrets hidden within the intricate threads of operations. This flow, characterized by its straightforward elegance, paints a vivid picture of the platform's performance and interactions.
+
+### The Role of Aristophanes
+
+Each API is accompanied by its vigilant companion, **Aristophanes**—the sidecar that opens the doors to tracing. Aristophanes affords users the ability to initiate, augment, or cease traces, as well as to inject spans and database spans into these journeys. With these tools at hand, Aristophanes crafts traces, etching them into Elastic Search. The **traceid**, a UUID, takes the stage as the index—its unique identity preserving the story of each journey.
+
+### Euripides: Illuminating the Path of Traces
+
+**Euripides** emerges as the intrepid explorer, entrusted with the ability to read and comprehend traces stored in Elastic Search. Armed with this prowess, Euripides empowers the frontend, **Praxiteles**, to render these traces tangible. Through this symbiotic relationship, insights are born, journeys are mapped, and the grand narrative of the platform's performance comes to life.
+
+### The Metrics Symphony with Sophokles
+
+In the grand theater of Kubernetes, **Sophokles** takes the stage, meticulously collecting the symphony of metrics that tell the tale of every pod's existence. With artistry akin to the ancient playwrights, Sophokles fetches the metrics of memory and CPU usage, translating them into tangible insights. These insights illuminate the journey of each trace, enriching the narrative with the technical heartbeat of the platform.
+
+As we traverse the Tracing Flow, we uncover a symphony of data—an interplay of actions, traces, and metrics. Just as the poets of ancient Greece unveiled the essence of human experience through words, we, too, unveil the essence of our platform through the artistry of technology. In this flow, data dances, and insights bloom, enriching our Odyssey of knowledge and understanding.
+
+![Tracing](drawio/euripides.png)
+
+### Development flow
+
+In order to develop locally a development flow has been setup.
+
+![Development](drawio/development-flow.drawio.png)
+
+### Homecluster setup
+
+Odysseia-greek runs on a k3s platform powered by raspberry pi's.
+
+![Homecluster](drawio/homecluster.drawio.png)
 
 # Repos and services
 
@@ -145,10 +267,42 @@ Ptolemaios: Much like the strategic ruler himself, this sidecar service reigns s
 
 Solon is most famous for his role as the great Athenian lawgiver following the reforms made by Drakon. His laws laid the foundation of what would become the Athenian Democracy.
 
+### Drakon - Δράκων
 
-## Olympos
+ἐν τοίνυν τοῖς περὶ τούτων νόμοις ὁ Δράκων φοβερὸν κατασκευάζων καὶ δεινὸν τό τινʼ αὐτόχειρʼ ἄλλον ἄλλου γίγνεσθαι - Now Draco, in this group of laws, marked the terrible wickedness of homicide by banning the offender from the lustral water
 
-https://github.com/odysseia-greek/olympos
+<img src="https://www.greekboston.com/wp-content/uploads/2014/12/draco-720x484.jpg" alt="Drakon" width="200"/>
+
+Drakon is one of the ancient lawgivers in Athens.
+
+### Kleisthenes - Κλεισθένης
+
+ὀστρακισμός - ostracism, introduced by Kleisthenes
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Cleisthenes.jpg/532px-Cleisthenes.jpg" alt="Cleisthenes" width="200"/>
+
+Fundamental to the forming of the Athenian democracy. The lawgiver Kleisthenes is tasked with laying the foundation upon which Perikles can later flourish.
+
+
+### Peisistratos - Πεισίστρατος
+
+καὶ Πεισίστρατος μὲν ἐτυράννευε Ἀθηνέων - So Pisistratus was sovereign of Athens
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Ingres_-_Pisistratus_head_and_left_hand_of_Alcibiades%2C_1824-1834.jpg" alt="Pisistratus" width="200"/>
+
+The first (known) tyrant of Athens
+
+### Periandros - Περίανδρος
+
+Περίανδρος δὲ ἦν Κυψέλου παῖς οὗτος ὁ τῷ Θρασυβούλῳ τὸ χρηστήριον μηνύσας· ἐτυράννευε δὲ ὁ Περίανδρος Κορίνθου - Periander, who disclosed the oracle's answer to Thrasybulus, was the son of Cypselus, and sovereign of Corinth
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Periander_Pio-Clementino_Inv276.jpg" alt="Periandros" width="200"/>
+
+Tyrant of Corinth.
+
+## Olympia
+
+https://github.com/odysseia-greek/olympia
 
 ### Alexandros - Αλέξανδρος
 
@@ -198,11 +352,6 @@ Ploutarchos (or Plutarch) is most well known for his Parallel Lives, a series of
 <img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Raffael_069.jpg" alt="Sokrates" width="200"/>
 
 Sokrates (on the right) is a figure of mythical propertions. He could stare at the sky for days, weather cold in nothing but a simple cloak. Truly one of the greatest philosophers and a big influence on Plato which is why we know so much about him at all. A sokratic dialogue is a game of wits were the back and forth between Sokrates and whoever was unlucky (or lucky) to be part of the dialogue would end in frustration. Sokrates was known to question anyone until he had proven they truly knew nothing. As the API responsible for creating and asking questions he was the obvious choice.
-
-
-## Ionia
-
-https://github.com/odysseia-greek/ionia
 
 ### Anaximander - Ἀναξίμανδρος
 
@@ -262,6 +411,17 @@ Melissus of Samos: An ancient Greek philosopher known for his contributions to E
 Parmenides is one of the so-called pre-socratics. Philosophers that laid the foundation for the future generations.
 One of the key elements in his work is the fact that everything is one never changing thing. Therefor he is a good fit for the dataseeder. Making it like nothing every changed.
 
+### Hippokrates - Ἱπποκράτης
+
+
+ὄμνυμι Ἀπόλλωνα ἰητρὸν καὶ Ἀσκληπιὸν καὶ Ὑγείαν καὶ Πανάκειαν καὶ θεοὺς πάντας τε καὶ πάσας, ἵστορας ποιεύμενος, ἐπιτελέα ποιήσειν κατὰ δύναμιν καὶ κρίσιν ἐμὴν ὅρκον τόνδε καὶ συγγραφὴν τήνδε - I swear by Apollo Healer, by Asclepius, by Hygieia, by Panacea, and by all the gods and goddesses, making them my witnesses, that I will carry out, according to my ability and judgment, this oath and this indenture.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Hippocrates.jpg" alt="Hippokrates" width="200"/>
+
+
+The most well known medical professional in history. Hippokrates houses tests to see whether the other services are in good health.
+
+
 
 ## Frontend
 
@@ -273,42 +433,13 @@ https://github.com/odysseia-greek/pheidias
 
 Pheidias (or Phidias) is one of the great artists of the Greek world, most famous for his work on the Athenian Akropolis. An apt choice for the frontend of the app.
 
-## Knossos
 
-https://github.com/odysseia-greek/knossos
-
-### Drakon - Δράκων
-
-ἐν τοίνυν τοῖς περὶ τούτων νόμοις ὁ Δράκων φοβερὸν κατασκευάζων καὶ δεινὸν τό τινʼ αὐτόχειρʼ ἄλλον ἄλλου γίγνεσθαι - Now Draco, in this group of laws, marked the terrible wickedness of homicide by banning the offender from the lustral water
-
-<img src="https://www.greekboston.com/wp-content/uploads/2014/12/draco-720x484.jpg" alt="Drakon" width="200"/>
-
-Drakon is one of the ancient lawgivers in Athens.
+## Mykenai
 
 
-### Periandros - Περίανδρος
-
-Περίανδρος δὲ ἦν Κυψέλου παῖς οὗτος ὁ τῷ Θρασυβούλῳ τὸ χρηστήριον μηνύσας· ἐτυράννευε δὲ ὁ Περίανδρος Κορίνθου - Periander, who disclosed the oracle's answer to Thrasybulus, was the son of Cypselus, and sovereign of Corinth
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Periander_Pio-Clementino_Inv276.jpg" alt="Periandros" width="200"/>
-
-Tyrant of Corinth.
-
-### Thrasyboulos - Θρασύβουλος
-
-πέμψας γὰρ παρὰ Θρασύβουλον κήρυκα ἐπυνθάνετο ὅντινα ἂν τρόπον ἀσφαλέστατον καταστησάμενος τῶν πρηγμάτων κάλλιστα τὴν πόλιν ἐπιτροπεύοι. - He had sent a herald to Thrasybulus and inquired in what way he would best and most safely govern his city.
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/IONIA%2C_Miletos._Late_6th-early_5th_century_BC._AR_Obol_%289mm%2C_1.07_g%29._Forepart_of_lion_left%2C_head_right_Stellate_and_floral_design_within_incuse_square.jpg" alt="Thrasyboulos" width="200"/>
-
-Tyrant of Miletos in the 7th century. He was an ally of Periandros
-
-## Ops
-
-Several repos here.
+https://github.com/odysseia-greek/mykenai
 
 ### Archimedes - Ἀρχιμήδης
-
-https://github.com/odysseia-greek/archimedes
 
 εὕρηκα - I found it!
 
@@ -317,9 +448,14 @@ https://github.com/odysseia-greek/archimedes
 Archimedes is one of the greatest mathematicians of all time. He is also known for some nifty inventions which is why his
 name has been chosen for the `ctl` tooling.
 
-### Lykourgos - Λυκοῦργος
+### Dareios - Δαρεῖος
 
-https://github.com/odysseia-greek/lykourgos
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/67/Darius_the_great._jpg.jpg" alt="Dareios" width="200"/>
+
+Dareios is a powerful and versatile load testing repository named after the renowned Persian Great King. This repository is specifically designed to facilitate load testing for odysseia-greek.
+
+
+### Lykourgos - Λυκοῦργος
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Lycurgus.jpg" alt="Lykourgos" width="200"/>
 
@@ -328,40 +464,31 @@ Ansbile and Terraform scripts can be found here.
 
 ### Themistokles - Θεμιστοκλῆς
 
-https://github.com/odysseia-greek/themistokles
-
 <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Illustrerad_Verldshistoria_band_I_Ill_116.png" alt="Themistokles" width="200"/>
 
 Themistokles is argueably the greatest Greek admiral. His victory at Salamis is most well-known. As an admiral he held sway over many ships and thus over many pilots (kubernetes).
 You can find all helm charts needed here.
 
-
-## Tests
-
-### Hippokrates - Ἱπποκράτης
-
-https://github.com/odysseia-greek/hippokrates
-
-ὄμνυμι Ἀπόλλωνα ἰητρὸν καὶ Ἀσκληπιὸν καὶ Ὑγείαν καὶ Πανάκειαν καὶ θεοὺς πάντας τε καὶ πάσας, ἵστορας ποιεύμενος, ἐπιτελέα ποιήσειν κατὰ δύναμιν καὶ κρίσιν ἐμὴν ὅρκον τόνδε καὶ συγγραφὴν τήνδε - I swear by Apollo Healer, by Asclepius, by Hygieia, by Panacea, and by all the gods and goddesses, making them my witnesses, that I will carry out, according to my ability and judgment, this oath and this indenture.
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Hippocrates.jpg" alt="Hippokrates" width="200"/>
-
-
-The most well known medical professional in history. Hippokrates houses tests to see whether the other services are in good health.
-
 ### Xerxes - Ξέρξης
-
-https://github.com/odysseia-greek/xerxes
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/National_Museum_of_Iran_Darafsh_%28785%29.JPG" alt="Xerxes" width="200"/>
 
 Xerxes was the Persian great king and invaded Greece during the second Greco-Persion war. He tested the Greeks with an army so great it was reported to drain rivers and shake the earth.
 
-## Intefaces
+
+## Agora
+
+https://github.com/odysseia-greek/agora
+
+### Archytas - Ἀρχύτας
+
+Ἀνάγκη γάρ ποτε τῷ ἀκριβεῖ λόγῳ τὰ πολλὰ τῶν ἀνθρώπων ὑποτεταχέναι - For many things among men are necessarily subjected to accurate reason.
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Archytas_of_Taras.jpg/220px-Archytas_of_Taras.jpg" alt="Aristoteles" width="200"/>
+
+Cache interface
 
 ### Aristoteles - Ἀριστοτέλης
-
-https://github.com/odysseia-greek/aristoteles
 
 Τριών δει παιδεία: φύσεως, μαθήσεως, ασκήσεως.
 
@@ -374,8 +501,6 @@ Aristoteles: Embodying the essence of inquiry and discovery, this interface for 
 
 ### Eupalinos - Εὐπαλῖνος
 
-https://github.com/odysseia-greek/eupalinos
-
 ἀρχιτέκτων δὲ τοῦ ὀρύγματος τούτου ἐγένετο Μεγαρεὺς Εὐπαλῖνος Ναυστρόφου
 
 The designer of this work was Eupalinus son of Naustrophus, a Megarian
@@ -385,8 +510,6 @@ The designer of this work was Eupalinus son of Naustrophus, a Megarian
 Eupalinos: Crafted with meticulous care, this bespoke queue embodies efficiency, orchestrating tasks with precision and grace, much like the architectural marvels created by its namesake.
 
 ### Diogenes - Διογένης
-
-https://github.com/odysseia-greek/diogenes
 
 ἄνθρωπον ζητῶ
 
@@ -398,8 +521,6 @@ I am looking for an honest man
 
 ### Plato - Πλάτων
 
-https://github.com/odysseia-greek/plato
-
 χαλεπὰ τὰ καλά
 
 Good things are difficult to attain
@@ -410,8 +531,6 @@ Plato: The philosopher of unity and ideal forms, this package serves as a harmon
 
 
 ### Thales - Θαλῆς
-
-https://github.com/odysseia-greek/thales
 
 Μέγιστον τόπος· ἄπαντα γὰρ χωρεῖ
 
@@ -428,111 +547,3 @@ Thales: Encompassing the vast expanse of Kubernetes operations, this interface m
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Eratosthene.01.png" alt="Eratosthenes" width="200"/>
 
 Holds fixtures in multiple repos. Eratosthenes was one of the librarians of Alexandria. He is most famous for calculating the circumference of the earth.
-
-# Technical docs
-
-There are currently a few flows that are worth expanding upon:
-
-## Odyssey of Services: Navigating the Odyssey Greek Learning Platform
-
-Welcome to the Odyssey Greek Learning Platform, where ancient wisdom meets modern technology. As you embark on your journey to explore the depths of the Greek language, let us guide you through the way our services weave together to create a seamless and enriching experience.
-
-### The Starting Point
-
-When you access [https://odysseia-greek.com](https://odysseia-greek.com), you step onto the homepage of our application, crafted with Vue.js. From here, you can embark on your learning quest through various major modules, each named after a prominent figure in Greek history.
-
-- **Quiz (Sokrates)**: Engage in interactive quizzes that challenge your knowledge and understanding.
-- **Text (Herodotos)**: Immerse yourself in the writings of Herodotus, exploring the ancient texts.
-- **Grammar (Dionysios)**: Delve into the intricate web of Greek grammar with Dionysios.
-- **Dictionary (Alexandros)**: Access a treasure trove of Greek words and meanings, with more in the works.
-
-### Seamless Navigation
-
-As you make calls and interact with the platform, our architecture works harmoniously to provide a seamless experience. The frontend, aptly named **Pheidias**, takes your requests and forwards them to a powerful backend GraphQL proxy. This proxy connects with the necessary APIs to retrieve the information you seek. Our backend APIs are meticulously crafted using Golang, ensuring efficiency and reliability.
-
-### The Vault of Configurations
-
-Central to our ecosystem is **Vault**, the guardian of configurations. Every API, including our major modules and backend services, sources its configuration securely from Vault. This ensures that each component is equipped with the precise information it requires to function optimally.
-
-### Empowering Elastic Search
-
-Elastic Search stands as the cornerstone of our system, storing the essence of our content. The database is dynamically enriched by dedicated **Dataseeders** working tirelessly behind the scenes. Each Dataseeder exclusively populates its designated index, ensuring data integrity and organization.
-
-### Unveiling the Unconventional
-
-Among our Dataseeders, **Parmenides** stands out with its unique approach. This visionary Seeder places messages on a queue named **Eupalinos**. These messages are then orchestrated and processed by **Melissos**, contributing to the expansion of our dictionary.
-
-### Initiating the Journey
-
-To ensure a seamless start for every traveler on our platform, **Periandros** and **Drakon** work as Init Containers. They lay the foundation by creating necessary roles and provisioning user accounts for each pod.
-
-### Guiding the Odyssey
-
-At the helm of our platform is **Themistokles**, orchestrating and managing the Kubernetes environment. When it's time for deployment, **Archimedes**, our versatile command-line tool, steps in. Archimedes orchestrates everything from high availability setups to TLS configurations, vault management, and elastic deployments.
-
-### Enabling TLS with Perikles
-
-Among our heroes is **Perikles**, an ingenious service wielding an **AdmissionWebHook**. Much like the Athenian statesman, Perikles examines each service and determines if TLS is required. It then adroitly creates and updates certificates, fortifying our system's security with the same wisdom that fortified the walls of Athens.
-
-As you navigate our platform, remember that just as the heroes of ancient Greece embarked on epic journeys, you too are on a journey of discovery and learning. Together, we explore the realms of the Greek language and culture, bridging the past and the present in a symphony of knowledge.
-
-![Services](profile/drawio/odysseia.drawio.png)
-
-## Solon Flow: Ensuring Configurations and Access
-
-Within the Odyssey Greek Learning Platform, the Solon Flow serves as a vital guardian, orchestrating the intricate dance of configurations and access across our services. This process is divided into several flows:
-
-### Flows in Harmony
-
-1. **API Flow**: Dedicated to APIs, this flow governs the interaction between services and the Elasticsearch database. APIs are empowered to fetch and manipulate data, but they are carefully restricted from deleting documents or indexes. Each API operates within its own designated index, ensuring separation and security.
-
-2. **Seeder Flow**: Seeders, the diligent workers of our ecosystem, play a pivotal role in enriching our Elasticsearch database. However, they operate under strict limitations—they can populate documents, but they are barred from reading any data.
-
-3. **Hybrid Flow**: This distinctive flow is exclusively tailored for Melissos, the visionary Seeder. Melissos bridges the gap between adding and updating documents in Elasticsearch. Due to its unique responsibilities, Melissos operates solely within this hybrid flow.
-
-### Controlled Initiatives by Periandros
-
-The initiation of this configuration symphony is orchestrated by **Periandros**, our Init Container. It interfaces directly with Solon to request the creation of essential configurations. This dance of creation involves establishing users in Elasticsearch and safeguarding their credentials within Vault. Notably, each pod's username is its identity, ensuring that every pod enjoys its unique access.
-
-### Ptolemaios: The Gatekeeper
-
-As a pod springs to life, it reaches out to its guardian **Ptolemaios**, the sidecar. Ptolemaios, in turn, communicates with Solon to secure a one-time token for accessing Vault—a token rendered useless after use. Solon's vigilance shines as it inspects Kubernetes annotations, evaluating the pod's role and the specified access level. Through annotations like:
-
-```yaml
-spec:
-  template:
-    metadata:
-      annotations:
-        odysseia-greek/role: api
-        odysseia-greek/access: dictionary
-```
-
-Access roles are established, delineating the permissible actions for the pod. Once the evaluation proves successful, a token is issued, paving the way for Ptolemaios to request the configuration data from Vault.
-
-#### The Elegance of Control
-
-This orchestration achieves a controlled equilibrium. Solon, the master conductor, remains devoid of direct access to configurations. While it possesses the power to create and delete, the privilege of reading these configurations remains beyond its grasp. Ptolemaios, the vigilant gatekeeper, guards the path to Vault with unwavering scrutiny, ensuring secure and controlled access for each pod.
-
-Through the Solon Flow, our platform attains a harmonious symphony of configurations and access. Just as the ancient Greeks revered the delicate balance of wisdom and governance, we uphold this principle in our modern technology, fostering a landscape of reliability and security.
-
-![Solon](profile/drawio/solon-flow.drawio.png)
-
-## The Tracing Flow: Unveiling Insights through the Symphony of Data
-
-Within the Odyssey Greek Learning Platform, the Tracing Flow unveils the secrets hidden within the intricate threads of operations. This flow, characterized by its straightforward elegance, paints a vivid picture of the platform's performance and interactions.
-
-### The Role of Aristophanes
-
-Each API is accompanied by its vigilant companion, **Aristophanes**—the sidecar that opens the doors to tracing. Aristophanes affords users the ability to initiate, augment, or cease traces, as well as to inject spans and database spans into these journeys. With these tools at hand, Aristophanes crafts traces, etching them into Elastic Search. The **traceid**, a UUID, takes the stage as the index—its unique identity preserving the story of each journey.
-
-### Euripides: Illuminating the Path of Traces
-
-**Euripides** emerges as the intrepid explorer, entrusted with the ability to read and comprehend traces stored in Elastic Search. Armed with this prowess, Euripides empowers the frontend, **Praxiteles**, to render these traces tangible. Through this symbiotic relationship, insights are born, journeys are mapped, and the grand narrative of the platform's performance comes to life.
-
-### The Metrics Symphony with Sophokles
-
-In the grand theater of Kubernetes, **Sophokles** takes the stage, meticulously collecting the symphony of metrics that tell the tale of every pod's existence. With artistry akin to the ancient playwrights, Sophokles fetches the metrics of memory and CPU usage, translating them into tangible insights. These insights illuminate the journey of each trace, enriching the narrative with the technical heartbeat of the platform.
-
-As we traverse the Tracing Flow, we uncover a symphony of data—an interplay of actions, traces, and metrics. Just as the poets of ancient Greece unveiled the essence of human experience through words, we, too, unveil the essence of our platform through the artistry of technology. In this flow, data dances, and insights bloom, enriching our Odyssey of knowledge and understanding.
-
-![Tracing](profile/drawio/euripides.png)
