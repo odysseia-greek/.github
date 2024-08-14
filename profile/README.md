@@ -116,25 +116,25 @@ As you navigate our platform, remember that just as the heroes of ancient Greece
 
 ![Services](/profile/drawio/odysseia.drawio.png)
 
-## Solon Flow: Ensuring Configurations and Access
+## Solon Flow: Managing Configurations and Access
 
-Within the Odyssey Greek Learning Platform, the Solon Flow serves as a vital guardian, orchestrating the intricate dance of configurations and access across our services. This process is divided into several flows:
+The Solon Flow within the Odyssey Greek Learning Platform is a critical mechanism responsible for managing configurations and access across services. This process is divided into several distinct flows:
 
-### Flows in Harmony
+### Flow Breakdown
 
-1. **API Flow**: Dedicated to APIs, this flow governs the interaction between services and the Elasticsearch database. APIs are empowered to fetch and manipulate data, but they are carefully restricted from deleting documents or indexes. Each API operates within its own designated index, ensuring separation and security.
+1. **API Flow**: Interactions between services and the Elasticsearch database are handled through this flow. APIs are permitted to fetch and manipulate data within their designated index but are strictly prohibited from deleting documents or indexes. Each API operates within its own index, ensuring separation and security.
 
-2. **Seeder Flow**: Seeders, the diligent workers of our ecosystem, play a pivotal role in enriching our Elasticsearch database. However, they operate under strict limitations—they can populate documents, but they are barred from reading any data.
+2. **Seeder Flow**: The Elasticsearch database is enriched by Seeders through document population, though they are restricted from reading any data.
 
-3. **Hybrid Flow**: This distinctive flow is exclusively tailored for Melissos, the visionary Seeder. Melissos bridges the gap between adding and updating documents in Elasticsearch. Due to its unique responsibilities, Melissos operates solely within this hybrid flow.
+3. **Hybrid Flow**: This flow is designed to accommodate jobs or APIs that require both read and create rights. For example Melissos needs to access and write to the database. This flow is likely to disappear in future uses.
 
-### Controlled Initiatives by Periandros
+### Controlled Initiation by Periandros
 
-The initiation of this configuration symphony is orchestrated by **Periandros**, our Init Container. It interfaces directly with Solon to request the creation of essential configurations. This dance of creation involves establishing users in Elasticsearch and safeguarding their credentials within Vault. Notably, each pod's username is its identity, ensuring that every pod enjoys its unique access.
+**Periandros**, the Init Container, is responsible for initiating the creation of essential configurations by interfacing with Solon. Users in Elasticsearch are set up, and their credentials are securely stored in Vault. The username of each pod serves as its identity, ensuring unique access for every pod.
 
-### Ptolemaios: The Gatekeeper
+### Ptolemaios: The Access Gatekeeper
 
-As a pod springs to life, it reaches out to its guardian **Ptolemaios**, the sidecar. Ptolemaios, in turn, communicates with Solon to secure a one-time token for accessing Vault—a token rendered useless after use. Solon's vigilance shines as it inspects Kubernetes annotations, evaluating the pod's role and the specified access level. Through annotations like:
+When a pod is launched, communication is established with **Ptolemaios**, the sidecar, which then contacts Solon to obtain a one-time Vault access token. This token is rendered invalid after use. The role and access level of the pod are evaluated by Solon based on Kubernetes annotations such as:
 
 ```yaml
 spec:
@@ -145,37 +145,214 @@ spec:
         odysseia-greek/access: dictionary
 ```
 
-Access roles are established, delineating the permissible actions for the pod. Once the evaluation proves successful, a token is issued, paving the way for Ptolemaios to request the configuration data from Vault.
+Once the evaluation is successful, a token is issued, enabling Ptolemaios to request the necessary configuration data from Vault.
 
-#### The Elegance of Control
+### The Elegance of Control
+A controlled balance is maintained within this system. Solon is capable of creating and deleting configurations but does not have the privilege to read them. Secure and controlled access to Vault for each pod is ensured by Ptolemaios.
 
-This orchestration achieves a controlled equilibrium. Solon, the master conductor, remains devoid of direct access to configurations. While it possesses the power to create and delete, the privilege of reading these configurations remains beyond its grasp. Ptolemaios, the vigilant gatekeeper, guards the path to Vault with unwavering scrutiny, ensuring secure and controlled access for each pod.
-
-Through the Solon Flow, our platform attains a harmonious symphony of configurations and access. Just as the ancient Greeks revered the delicate balance of wisdom and governance, we uphold this principle in our modern technology, fostering a landscape of reliability and security.
+Through the Solon Flow, a harmonious balance of configurations and access is achieved within the platform. Just as the ancient Greeks valued the balance of wisdom and governance, these principles are upheld in modern technology, ensuring reliability and security.
 
 ![Solon](/profile/drawio/solon-flow.drawio.png)
 
 ## The Tracing Flow: Unveiling Insights through the Symphony of Data
 
-Within the Odyssey Greek Learning Platform, the Tracing Flow unveils the secrets hidden within the intricate threads of operations. This flow, characterized by its straightforward elegance, paints a vivid picture of the platform's performance and interactions.
+Within the Odyssey Greek Learning Platform, the Tracing Flow plays a pivotal role in revealing the platform's performance and interactions. This flow, composed of several interconnected components, provides a comprehensive view of system behavior and resource usage.
 
-### The Role of Aristophanes
+### Aristophanes: The Tracing Service
 
-Each API is accompanied by its vigilant companion, **Aristophanes**—the sidecar that opens the doors to tracing. Aristophanes affords users the ability to initiate, augment, or cease traces, as well as to inject spans and database spans into these journeys. With these tools at hand, Aristophanes crafts traces, etching them into Elastic Search. The **traceid**, a UUID, takes the stage as the index—its unique identity preserving the story of each journey.
+**Aristophanes** is the core tracing service responsible for capturing and logging traces during each API call. To ensure a detailed and accurate depiction of the platform’s state at any given moment, Aristophanes also collects metrics from **Sophokles**—a sidecar that accesses the Kubernetes Metrics Server to gather real-time data on the pod it resides in. These combined traces and metrics are then stored in Elasticsearch, with each trace identified by a unique **traceid**.
 
-### Euripides: Illuminating the Path of Traces
+### Euripides: The GraphQL Gateway
 
-**Euripides** emerges as the intrepid explorer, entrusted with the ability to read and comprehend traces stored in Elastic Search. Armed with this prowess, Euripides empowers the frontend, **Praxiteles**, to render these traces tangible. Through this symbiotic relationship, insights are born, journeys are mapped, and the grand narrative of the platform's performance comes to life.
+**Euripides** serves as the GraphQL gateway that facilitates the querying of both trace and metric data. Through Euripides, users can access detailed insights into the platform’s operations, drawing from the rich data collected by Aristophanes and Sophokles.
 
-### The Metrics Symphony with Sophokles
+### Aiskhylos: The Metrics Collector
 
-WIP: sophokles is not build yet.
+**Aiskhylos** is a centrally running API that regularly gathers metrics data for pods and nodes across the system. By default, this data is collected at 180-second intervals, providing an ongoing view of resource usage and system performance.
 
-In the grand theater of Kubernetes, **Sophokles** takes the stage, meticulously collecting the symphony of metrics that tell the tale of every pod's existence. With artistry akin to the ancient playwrights, Sophokles fetches the metrics of memory and CPU usage, translating them into tangible insights. These insights illuminate the journey of each trace, enriching the narrative with the technical heartbeat of the platform.
+### Praxiteles: The Frontend Interface
 
-As we traverse the Tracing Flow, we uncover a symphony of data—an interplay of actions, traces, and metrics. Just as the poets of ancient Greece unveiled the essence of human experience through words, we, too, unveil the essence of our platform through the artistry of technology. In this flow, data dances, and insights bloom, enriching our Odyssey of knowledge and understanding.
+**Praxiteles** is the frontend interface, developed in Svelte, that connects to Euripides to present all this data to users. Praxiteles allows users to visualize traces and metrics, offering an intuitive and comprehensive view of the platform’s behavior and performance.
 
-![Tracing](/profile/drawio/euripides.png)
+### Sophokles: The Pod Metrics Sidecar
+
+**Sophokles** is a sidecar running alongside each pod, responsible for accessing the Kubernetes Metrics Server to retrieve real-time metrics such as memory and CPU usage. This data is then fed into Aristophanes to complement the traces, providing a full picture of system performance at the time of each trace.
+
+Through the combined efforts of these components, the Tracing Flow provides a rich and detailed narrative of the Odysseia Greek Learning Platform’s operations. By capturing both traces and metrics, this flow ensures that every aspect of the platform’s performance is illuminated, offering valuable insights and fostering a deeper understanding of the system’s inner workings.
+
+
+![Tracing](/profile/drawio/euripides.drawio.png)
+
+### Example trace:
+
+```json
+{
+  "__typename": "ParentTrace",
+  "traceID": "eb26fd0b-3ae5-410e-94df-437505936d6e",
+  "isActive": false,
+  "timeEnded": "2024-08-06T07:40:30.439",
+  "timeStarted": "2024-08-06T07:40:30.375",
+  "totalTime": 64,
+  "responseCode": 200,
+  "items": [
+    {
+      "__typename": "StartTrace",
+      "parentSpanID": "3def16ee6ddc8242",
+      "spanID": "3def16ee6ddc8242",
+      "method": "POST",
+      "url": "/graphql",
+      "host": "homeros:8080",
+      "remoteAddress": "10.0.0.161:46422",
+      "timestamp": "2024-08-06'T'07:40:30.375",
+      "podName": "homeros-64d6dfff8b-cx9np",
+      "namespace": "odysseia",
+      "itemType": "trace_start",
+      "operation": "answer",
+      "rootQuery": "query answer{\n\tanswer(\n\t\ttheme: \"Democracy\"\n\t\tset: \"1\"\n\t\tquizType: \"media\"\n\t\tquizWord: \"Ἀθῆναι\"\n\t\tanswer: \"leader, guide\"\n\t\tcomprehensive: true\n\t) {\n\t\t\t\t... on ComprehensiveResponse {\n\t\tcorrect\n\t\tquizWord\n\t\tsimilarWords{\n\t\t\tgreek\n\tenglish\n\t\t}\n\t\tfoundInText{\n\t\t\t\t\trootword\n\t\t\t\t\tconjugations {\n\t\t\t\t\t\tword\n\t\t\t\t\t\trule\n\t\t\t\t\t}\n\t\t\t\t\tresults{\n\t\t\t\t\t\tauthor\n\t\t\t\t\t\tbook\n\t\t\t\t\t\ttext{\n\t\t\t\t\t\t\ttranslations\n\t\t\t\t\t\t\tgreek\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t}\n\t}\n\t}\n}\n",
+      "metrics": null
+    },
+    {
+      "__typename": "CloseTrace",
+      "parentSpanID": "3def16ee6ddc8242",
+      "timestamp": "2024-08-06'T'07:40:30.439",
+      "podName": "homeros-64d6dfff8b-cx9np",
+      "namespace": "odysseia",
+      "itemType": "trace_close",
+      "responseBody": "{\"correct\":false,\"quizWord\":\"Ἀθῆναι\",\"foundInText\":{\"rootword\":\"\",\"partOfSpeech\":\"\",\"conjugations\":null,\"texts\":null},\"similarWords\":[{\"greek\":\"Ἀθηναῖος\",\"english\":\"of or relating to Athens; Athenian\"},{\"greek\":\"Ἀθήναιος\",\"english\":\"Athenaeus\"},{\"greek\":\"προδαῆναι\",\"english\":\"to know beforehand\"},{\"greek\":\"κάθημαι\",\"english\":\"sit\"}],\"progress\":{\"timesCorrect\":0,\"timesIncorrect\":0,\"averageAccuracy\":0}}",
+      "metrics": null
+    },
+    {
+      "__typename": "Span",
+      "parentSpanID": "3468f5687dcaebeb",
+      "spanID": "6190001aa427e1e5",
+      "namespace": "odysseia",
+      "timestamp": "2024-08-06'T'07:40:30.438",
+      "podName": "sokrates-7664457676-ldfw5",
+      "itemType": "span",
+      "action": "CloseSpan",
+      "status": "status code: 200",
+      "took": "56.042758ms"
+    },
+    {
+      "__typename": "Span",
+      "parentSpanID": "3468f5687dcaebeb",
+      "spanID": "db7e61d6b186f966",
+      "namespace": "odysseia",
+      "timestamp": "2024-08-06'T'07:40:30.419",
+      "podName": "sokrates-7664457676-ldfw5",
+      "itemType": "span",
+      "action": "analyseText",
+      "status": "querying Alexandros for word: αθηναι",
+      "took": ""
+    },
+    {
+      "__typename": "Trace",
+      "parentSpanID": "3468f5687dcaebeb",
+      "spanID": "e8a168076ddb8700",
+      "method": "POST",
+      "url": "/herodotos/v1/texts/_analyze",
+      "host": "herodotos:5000",
+      "timestamp": "2024-08-06'T'07:40:30.465",
+      "podName": "herodotos-86969df479-b6847",
+      "namespace": "odysseia",
+      "itemType": "trace",
+      "metrics": {
+        "__typename": "tracingMetrics",
+        "cpuHumanReadable": "11m",
+        "memoryHumanReadable": "86Mi",
+        "cpuRaw": 11,
+        "memoryRaw": 86
+      }
+    },
+    {
+      "__typename": "Span",
+      "parentSpanID": "e8a168076ddb8700",
+      "spanID": "ab7faebda1b1a4ec",
+      "namespace": "odysseia",
+      "timestamp": "2024-08-06'T'07:40:30.467",
+      "podName": "herodotos-86969df479-b6847",
+      "itemType": "span",
+      "action": "CloseSpan",
+      "status": "status code: 200",
+      "took": "7.205876ms"
+    },
+    {
+      "__typename": "Trace",
+      "parentSpanID": "3468f5687dcaebeb",
+      "spanID": "abc63ae8259a725c",
+      "method": "GET",
+      "url": "/alexandros/v1/search?lang=greek&mode=fuzzy&searchInText=false&word=%CE%B1%CE%B8%CE%B7%CE%BD%CE%B1%CE%B9",
+      "host": "alexandros:5000",
+      "timestamp": "2024-08-06'T'07:40:30.400",
+      "podName": "alexandros-6fdb5fc789-ttgvp",
+      "namespace": "odysseia",
+      "itemType": "trace",
+      "metrics": {
+        "__typename": "tracingMetrics",
+        "cpuHumanReadable": "91m",
+        "memoryHumanReadable": "102Mi",
+        "cpuRaw": 91,
+        "memoryRaw": 102
+      }
+    },
+    {
+      "__typename": "Trace",
+      "parentSpanID": "3def16ee6ddc8242",
+      "spanID": "3468f5687dcaebeb",
+      "method": "POST",
+      "url": "/sokrates/v1/quiz/answer",
+      "host": "sokrates:5000",
+      "timestamp": "2024-08-06'T'07:40:30.382",
+      "podName": "sokrates-7664457676-ldfw5",
+      "namespace": "odysseia",
+      "itemType": "trace",
+      "metrics": {
+        "__typename": "tracingMetrics",
+        "cpuHumanReadable": "2m",
+        "memoryHumanReadable": "24Mi",
+        "cpuRaw": 2,
+        "memoryRaw": 24
+      }
+    },
+    {
+      "__typename": "DatabaseSpan",
+      "parentSpanID": "abc63ae8259a725c",
+      "spanID": "6056e24a089e58ee",
+      "itemType": "database_span",
+      "query": "{\"query\":{\"fuzzy\":{\"greek\":{\"fuzziness\":2,\"value\":\"αθηναι\"}}},\"size\":5}",
+      "namespace": "odysseia",
+      "timestamp": "2024-08-06'T'07:40:30.432",
+      "podName": "alexandros-6fdb5fc789-ttgvp",
+      "took": "29ms",
+      "hits": 27
+    },
+    {
+      "__typename": "DatabaseSpan",
+      "parentSpanID": "3468f5687dcaebeb",
+      "spanID": "fb1c3d244b7a3b0d",
+      "itemType": "database_span",
+      "query": "{\"query\":{\"bool\":{\"must\":[{\"match\":{\"quizType\":\"media\"}},{\"match\":{\"theme\":\"Democracy\"}},{\"match\":{\"set\":\"1\"}}]}}}",
+      "namespace": "odysseia",
+      "timestamp": "2024-08-06'T'07:40:30.416",
+      "podName": "sokrates-7664457676-ldfw5",
+      "took": "7ms",
+      "hits": 1
+    },
+    {
+      "__typename": "Span",
+      "parentSpanID": "3468f5687dcaebeb",
+      "spanID": "48eaa150cf2432d9",
+      "namespace": "odysseia",
+      "timestamp": "2024-08-06'T'07:40:30.422",
+      "podName": "sokrates-7664457676-ldfw5",
+      "itemType": "span",
+      "action": "analyseText",
+      "status": "querying Herodotos for word: αθηναι",
+      "took": ""
+    }
+  ]
+}
+```
 
 ## Development flow
 
