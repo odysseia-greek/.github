@@ -1,0 +1,36 @@
+direction: right
+
+classes: {
+  workload: {style.fill: "#eef2ff"; style.stroke: "#4f46e5"}
+  security: {style.fill: "#f0fdf4"; style.stroke: "#16a34a"}
+  store: {shape: cylinder; style.fill: "#fff7ed"; style.stroke: "#ea580c"}
+}
+
+bootstrap: Bootstrap {
+  peisistratos: "Peisistratos\nVault authentication and policies" {class: security}
+  theofrastos: "Theofrastos\nElasticsearch setup and roles" {class: security}
+}
+
+pod: Kubernetes pod {
+  periandros: "Periandros\ncredential init container" {class: workload}
+  api: "API or seeder" {class: workload}
+  aristides: "Aristides\nconfiguration sidecar" {class: workload}
+}
+
+solon: "Solon\nvalidate workload and broker access" {class: security}
+kubernetes: "Kubernetes API" {class: store}
+vault: Vault {class: store}
+elastic: Elasticsearch {class: store}
+
+bootstrap.peisistratos -> vault: configure Kubernetes auth and policies
+bootstrap.theofrastos -> elastic: indexes, lifecycle policies and roles
+pod.periandros -> solon: pod identity, role and access
+solon -> kubernetes: validate caller workload
+solon -> elastic: create scoped user
+solon -> vault: store workload credentials
+pod.periandros -> pod.api: initialization complete
+pod.api -> pod.aristides: GetSecret
+pod.aristides -> solon: request one-use Vault token
+solon -> pod.aristides: one-use token
+pod.aristides -> vault: read workload secret
+pod.aristides -> pod.api: runtime configuration

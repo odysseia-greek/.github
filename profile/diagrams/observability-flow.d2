@@ -1,0 +1,24 @@
+direction: right
+
+classes: {
+  service: {style.fill: "#eef2ff"; style.stroke: "#4f46e5"}
+  pipeline: {style.fill: "#ecfeff"; style.stroke: "#0891b2"}
+  store: {shape: cylinder; style.fill: "#fff7ed"; style.stroke: "#ea580c"}
+}
+
+api: "Application container" {class: service}
+aristophanes: "Aristophanes\ntrace sidecar" {class: pipeline}
+sophokles: "Sophokles\nhost metrics DaemonSet" {class: pipeline}
+eupalinos: "Eupalinos\nevent queue" {class: store}
+aiskhylos: "Aiskhylos\ningest worker" {class: pipeline}
+elastic: Elasticsearch {class: store}
+euripides: "Euripides\nobservability GraphQL API" {class: service}
+polykleitos: "Polykleitos\nobservability UI" {class: service}
+
+api -> aristophanes: trace and span events
+aristophanes -> eupalinos: aristophanes channel
+sophokles -> eupalinos: sophokles channel
+eupalinos -> aiskhylos: trace and metric streams
+aiskhylos -> elastic: normalized documents
+polykleitos -> euripides: GraphQL queries
+euripides -> elastic: retrieve traces and metrics

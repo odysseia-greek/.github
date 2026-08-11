@@ -1,0 +1,50 @@
+direction: down
+
+classes: {
+  service: {shape: rectangle; style.fill: "#eef2ff"; style.stroke: "#4f46e5"}
+  platform: {shape: rectangle; style.fill: "#ecfeff"; style.stroke: "#0891b2"}
+  data: {shape: cylinder; style.fill: "#fff7ed"; style.stroke: "#ea580c"}
+}
+
+user: Learner {shape: person}
+web: "Web client\nOlympia" {class: service}
+homeros: "Homeros\napplication GraphQL gateway" {class: service}
+
+domains: Learning domains {
+  apologia: Apologia {
+    sokrates: "Sokrates\nquiz gateway" {class: service}
+  }
+  ionia: Ionia {
+    herodotos: "Herodotos\nreading and text API" {class: service}
+  }
+  makedonia: Makedonia {
+    alexandros: "Alexandros\ndictionary gateway" {class: service}
+  }
+  alexandreia: Alexandreia {
+    dionysios: "Dionysios\ngrammar and text analysis" {class: service}
+  }
+}
+
+platform: Platform services {
+  solon: "Solon\nconfiguration" {class: platform}
+  aristides: "Aristides\nconfiguration sidecar" {class: platform}
+  attike: "Attike\nobservability pipeline" {class: platform}
+}
+
+elastic: Elasticsearch {class: data}
+vault: Vault {class: data}
+seeders: "Domain seeders" {class: service}
+
+user -> web: HTTPS
+web -> homeros: GraphQL
+homeros -> domains.apologia.sokrates: quizzes
+homeros -> domains.ionia.herodotos: reading and texts
+homeros -> domains.makedonia.alexandros: dictionary
+homeros -> domains.alexandreia.dionysios: grammar and analysis
+domains -> elastic: indexed language data
+seeders -> elastic: populate indexes
+domains -> platform.aristides: request configuration
+platform.aristides -> platform.solon: request one-use token
+platform.solon -> vault: manage secrets
+platform.aristides -> vault: read scoped secret
+domains -> platform.attike: traces and metrics
